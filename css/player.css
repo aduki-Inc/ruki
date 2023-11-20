@@ -78,4 +78,14 @@ ul li {
   width: 100%;
   max-width: 100%;
   height: calc(var(--vh, 1vh) * 100);
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#paler-container.playe-container {
+  border: 2px solid red;
+  width: 80%;
+  height: 90%;
 }
