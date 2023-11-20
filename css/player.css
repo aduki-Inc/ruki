@@ -88,4 +88,20 @@ ul li {
   border: 2px solid red;
   width: 80%;
   height: 90%;
+  display: flex;
+  flex-flow: column;
+  align-items: stretch;
+  justify-content: space-between;
+  position: relative;
+}
+
+#paler-container.playe-container > section {
+  border: 2px solid rgb(0, 0, 0);
+}
+
+#paler-container.playe-container > section.extras.right {
+  position: absolute;
+  height: 200px;
+  right: 0;
+  top: calc(50% - 100px);
 }
