@@ -14,6 +14,7 @@ Author URL: https://femar.me
 ==================================== */
 :root {
   --font-main: 'Plus Jakarta Sans';
+  --backgroud: #ffffff;
 }
 
 *,
@@ -85,7 +86,7 @@ ul li {
 }
 
 #paler-container.playe-container {
-  border: 2px solid red;
+  border: 1px solid rgb(78, 78, 78);
   width: 80%;
   height: 90%;
   display: flex;
@@ -95,13 +96,66 @@ ul li {
   position: relative;
 }
 
-#paler-container.playe-container > section {
-  border: 2px solid rgb(0, 0, 0);
-}
-
-#paler-container.playe-container > section.extras.right {
+#paler-container.playe-container>section.extras.right {
+  border: 1px solid rgb(78, 78, 78);
+  border-right: none;
+  background-color: var(--backgroud, #ffffff);
   position: absolute;
   height: 200px;
+  width: 80px;
   right: 0;
   top: calc(50% - 100px);
+}
+
+#paler-container.playe-container>section.status.top {
+  border-bottom: 1px solid rgb(78, 78, 78);
+  background-color: var(--backgroud, #ffffff);
+  height: 50px;
+}
+
+
+#paler-container.playe-container>section.lyrics {
+  border: none;
+  background-color: var(--backgroud, #ffffff);
+  height: calc(100% - 150px);
+}
+
+#paler-container.playe-container>section {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#paler-container.playe-container>section.controls {
+  border-top: 1px solid rgb(78, 78, 78);
+  background-color: var(--backgroud, #ffffff);
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#paler-container.playe-container>section.controls>.artist-info {
+  /* border: 1px solid rgb(78, 78, 78); */
+  display: flex;
+}
+
+section.controls>.artist-info>.info {
+  /* border: 1px solid rgb(78, 78, 78); */
+  display: flex;
+  flex-flow: column;
+  gap: 5px;
+}
+
+section.controls>.artist-info>.info>h4.song-title {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #404040;
+}
+
+section.controls>.artist-info>.info>span.artist {
+  margin: 0;
+  font-size: 1rem;
+  color: #666666;
 }
