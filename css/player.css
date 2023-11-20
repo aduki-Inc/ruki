@@ -77,4 +77,5 @@ ul li {
   border: 2px solid red;
   width: 100%;
   max-width: 100%;
+  height: calc(var(--vh, 1vh) * 100);
 }
