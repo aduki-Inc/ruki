@@ -83,6 +83,9 @@ ul li {
   flex-flow: column;
   align-items: center;
   justify-content: center;
+  background-image: url('/img/cover.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 #paler-container.playe-container {
