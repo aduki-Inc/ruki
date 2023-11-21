@@ -100,10 +100,10 @@ ul li {
   position: relative;
 
   /* Morph */
-  background: rgba(255, 255, 255, 0.25);
+  background: rgb(100, 172, 188, 0.25);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(2.5px);
-  -webkit-backdrop-filter: blur(2.5px);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
 }
@@ -156,6 +156,14 @@ ul li {
   align-items: center;
   justify-content: start;
   gap: 15px;
+  padding: 0 0 0 8px;
+
+  /* Morph */
+  background: rgb(100, 172, 188, 0.25);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 
 section.controls>.artist-info>.info {
@@ -168,8 +176,8 @@ section.controls>.artist-info>.info {
 }
 
 section.controls>.artist-info>.cover {
-  width: 80px;
-  height: 80px;
+  width: 65px;
+  height: 65px;
   display: flex;
   flex-flow: column;
   align-items: center;
@@ -187,11 +195,11 @@ section.controls>.artist-info>.cover>img {
 section.controls>.artist-info>.info>h4.song-title {
   margin: 0;
   font-size: 1.1rem;
-  color: #404040;
+  color: #ffffff;
 }
 
 section.controls>.artist-info>.info>span.artist {
   margin: 0;
   font-size: 1rem;
-  color: #666666;
+  color: #ebebeb;
 }
