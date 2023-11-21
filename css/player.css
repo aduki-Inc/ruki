@@ -75,7 +75,7 @@ ul li {
 }
 
 #container.container {
-  border: 2px solid red;
+  /* border: 2px solid red; */
   width: 100%;
   max-width: 100%;
   height: calc(var(--vh, 1vh) * 100);
@@ -86,6 +86,7 @@ ul li {
   background-image: url('/img/cover.jpg');
   background-repeat: no-repeat;
   background-size: cover;
+  /* background-size: 100%; */
 }
 
 #paler-container.playe-container {
@@ -97,12 +98,20 @@ ul li {
   align-items: stretch;
   justify-content: space-between;
   position: relative;
+
+  /* Morph */
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(2.5px);
+  -webkit-backdrop-filter: blur(2.5px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 #paler-container.playe-container>section.extras.right {
   border: 1px solid rgb(78, 78, 78);
   border-right: none;
-  background-color: var(--backgroud, #ffffff);
+  /* background-color: var(--backgroud, #ffffff); */
   position: absolute;
   height: 200px;
   width: 80px;
@@ -112,14 +121,14 @@ ul li {
 
 #paler-container.playe-container>section.status.top {
   border-bottom: 1px solid rgb(78, 78, 78);
-  background-color: var(--backgroud, #ffffff);
+  /* background-color: var(--backgroud, #ffffff); */
   height: 50px;
 }
 
 
 #paler-container.playe-container>section.lyrics {
   border: none;
-  background-color: var(--backgroud, #ffffff);
+  /* background-color: var(--backgroud, #ffffff); */
   height: calc(100% - 150px);
 }
 
@@ -132,7 +141,7 @@ ul li {
 
 #paler-container.playe-container>section.controls {
   border-top: 1px solid rgb(78, 78, 78);
-  background-color: var(--backgroud, #ffffff);
+  /* background-color: var(--backgroud, #ffffff); */
   height: 100px;
   display: flex;
   align-items: stretch;
