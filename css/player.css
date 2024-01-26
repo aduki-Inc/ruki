@@ -224,85 +224,46 @@ section.controls>.artist-info>.fades>span.fade {
   background-color: #ffffff;
   display: inline-block;
   width: 3px;
-  height: 5px;
+  height: 8px;
   border-radius: 10px;
 }
 
 section.controls>.artist-info>.fades>span.fade.last{
-  height: 20px;
+  /* height: 20px; */
   animation: classic 1s linear infinite;
 }
 
 section.controls>.artist-info>.fades>span.fade.first {
-  /* height: 25px; */
+  /* height: 20px; */
   animation: classic-reverse 1s linear infinite;
 }
 
 @keyframes classic {
-  30% {
-    height: 6px;
-  }
-
-  40% {
-    height: 8px;
+  0% {
+    transform: scaleY(1);
   }
 
   50% {
-    height: 10px;
-  }
-  
-  60% {
-    height: 12px;
-  }
-
-  70% {
-    height: 14px;
-  }
-
-  80% {
-    height: 16px;
-  }
-
-  90% {
-    height: 18px;
+    transform: scaleY(2);
   }
 
   100% {
-    height: 20px;
+    transform: scaleY(1);
   }
 }
 
 @keyframes classic-reverse {
-  30% {
-    height: 20px;
+  0% {
+    transform: scaleY(2);
   }
 
-  40% {
-    height: 18px;
-  }
 
   50% {
-    height: 16px;
-  }
-  
-  60% {
-    height: 14px;
-  }
-
-  70% {
-    height: 12px;
-  }
-
-  80% {
-    height: 10px;
-  }
-
-  90% {
-    height: 8px;
+    transform: scaleY(1);
   }
 
   100% {
-    height: 6px;
+    transform: scaleY(2);
   }
 }
 
