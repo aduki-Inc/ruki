@@ -305,37 +305,63 @@ section.controls>.artist-info>.fades>span.fade.first {
   border: 1px solid rgb(255, 255, 255);
   /* background-color: var(--background, #ffffff); */
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: center;
-  min-height: 170px;
-  min-width: 170px;
-  height: 170px;
-  width: 170px;
+  min-height: 400px;
+  min-width: 400px;
+  height: 400px;
+  width: 400px;
   border-radius: 100%;
-  position: relative;
+  /* position: relative; */
 }
 
-#player-container>section.controller>.control-bar>.bar {
-  border: 5px solid rgb(204, 16, 16);
-  background-color: var(--background, #ffffff);
+@keyframes progress {
+  0% { --percentage: 0; }
+  100% { --percentage: var(--value); }
+}
+
+@property --percentage {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+[role="progressbar"] {
+  border: 1px solid red;
+  --percentage: var(--value);
+  --primary: #369;
+  --secondary: #adf;
+  --size: 400px;
+  animation: progress 2s 0.5s forwards;
+  width: var(--size);
+  height: calc(--size / 2);
+  aspect-ratio: 2 / 1;
+  border-radius: 50% / 100% 100% 0 0;
+  position: relative;
+  overflow: hidden;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  /* min-width: 170px; */
-  min-height: 100%;
+}
+
+[role="progressbar"]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  border-radius: 100%;
+  height: 100%;
+  background: conic-gradient(from 0.75turn at 50% 100%, var(--primary) calc(var(--percentage) * 1% / 2), var(--secondary) calc(var(--percentage) * 1% / 2 + 0.1%));
+  mask: radial-gradient(at 50% 100%, white 55%, transparent 55.5%);
+  mask-mode: alpha;
+  -webkit-mask: radial-gradient(at 50% 100%, #0000 55%, #000 55.5%);
+  -webkit-mask-mode: alpha;
+}
 
-  /* position: absolute; */
-  /* top: 50%; */
-  /* right: 50%; */
-  /* left: 50%; */
-  bottom: 0%;
-  /* rotate: -90deg; */
-  /* transform: translate(-50%, -50%); */
-  /* clip-path: polygon(0% 0%, 50% 0%, 50% 50%, 50% 100%, 0% 100%); */
-
-  clip-path: polygon(0% 50%, 0px 100%, 100% 100%, 100% 50%, 50% 50%);
-
-  /* clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 50% 100%, 100% 100%); */
+[role="progressbar"]::after {
+  counter-reset: percentage var(--value);
+  content: counter(percentage) '%';
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: calc(var(--size) / 12);
+  color: var(--primary);
 }
