@@ -316,7 +316,7 @@ section.controls>.artist-info>.fades>span.fade.first {
 }
 
 @keyframes progress {
-  0% { --percentage: 0; }
+  0% { --percentage: 0 }
   100% { --percentage: var(--value); }
 }
 
@@ -327,7 +327,7 @@ section.controls>.artist-info>.fades>span.fade.first {
 }
 
 [role="progressbar"] {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   --percentage: var(--value);
   --primary: #369;
   --secondary: #adf;
@@ -336,7 +336,7 @@ section.controls>.artist-info>.fades>span.fade.first {
   width: var(--size);
   height: calc(var(--size) / 2);
   aspect-ratio: 2 / 1;
-  /* border-radius: 50% / 0 0 100% 100%; */
+  border-radius: 50% / 0 0 100% 100%;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -347,21 +347,28 @@ section.controls>.artist-info>.fades>span.fade.first {
 [role="progressbar"]::before {
   content: "";
   position: absolute;
-  bottom: 0;
+  /* border: 1px solid red; */
+  /* rotate: 180deg; */
+  /* translate: (-50%, 50%); */
+  /* border-radius: 10px; */
+  top: 0;
   right: 0;
+  transform: scale(-1, 1);
   min-width: 100%;
   min-height: 100%;
-  background: conic-gradient(from 0.75turn at 50% 100%, var(--primary) calc(var(--percentage) * 1% / 2), var(--secondary) calc(var(--percentage) * 1% / 2 + 0.1%));
-  /* mask: radial-gradient(at 50% 0%, white 55%, transparent 55.5%); */
-  /* mask-mode: alpha; */
-  /* -webkit-mask: radial-gradient(at 50% 0%, #0000 55%, #000 55.5%); */
-  /* -webkit-mask-mode: alpha; */
+  background: conic-gradient(from 90deg at 50% 0%, var(--primary) calc(var(--percentage) * 1% / 2), var(--secondary) calc(var(--percentage) * 1% / 2 + 0.2%));
+  mask: radial-gradient(at 50% 0%, #0000 68%, #000 68.6%);
+  mask-mode: alpha;
+  -webkit-mask: radial-gradient(at 50% 0%, #0000 68%, #000 68.6%);
+  -webkit-mask-mode: alpha;
 }
 
-/* [role="progressbar"]::after {
+[role="progressbar"]::after {
   counter-reset: percentage var(--value);
   content: counter(percentage) '%';
   font-family: Helvetica, Arial, sans-serif;
   font-size: calc(var(--size) / 12);
   color: var(--primary);
-} */
+  position: absolute;
+  top: 0;
+}
