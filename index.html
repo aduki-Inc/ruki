@@ -12,7 +12,24 @@
 <body>
   <div class="container" id="container">
     <div class="player-container" id="player-container">
-      <section class="status top">This is the top / Status</section>
+      <section class="status top">
+        <div class="left">Left</div>
+        <div class="current-song">
+          <div class="cover">
+            <img src="img/cover.jpg" alt="Cover Image">
+          </div>
+          <div class="fades">
+            <span class="fade last"></span>
+            <span class="fade first"></span>
+            <span class="fade last"></span>
+          </div>
+          <div class="info">
+            <h4 class="song-title">Keep On Loving You</h4>
+            <span class="artist">REO Speedwagon</span>
+          </div>
+        </div>
+        <div class="right">Right</div>
+      </section>
       <section class="lyrics">
         <div class="lyrics-container">
 
@@ -63,7 +80,22 @@
       </section>
       <section class="extras right">Right</section>
       <section class="controller footer">
-        <div class="arrows previous">Previous</div>
+        <div class="arrows previous">
+          <span class="up-next">
+            <span class="text">#01 Previous</span>
+          </span>
+          <div class="song">
+            <h4 class="name">Every breath you...</h4>
+          </div>
+          <div class="play-next">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M16.6018 10.6022C16.5302 10.6894 16.1961 11.06 15.9336 11.2998L15.7904 11.4305C13.7859 13.4142 8.79837 16.4006 6.26883 17.3597C6.26883 17.3815 4.76542 17.9482 4.04951 17.97H3.95406C2.85633 17.97 1.83019 17.4033 1.30519 16.4877C1.01883 15.9864 0.75633 14.5259 0.732466 14.5041C0.517694 13.1962 0.374512 11.1929 0.374512 8.98913C0.374512 6.67851 0.517694 4.58587 0.780194 3.29977C0.780194 3.27798 1.04269 2.10087 1.20974 1.7085C1.47224 1.14174 1.94951 0.66218 2.5461 0.357004C3.02338 0.139021 3.52451 0.0300293 4.04951 0.0300293C4.59838 0.0518276 5.62451 0.380982 6.03019 0.53139C8.70292 1.49052 13.8097 4.62947 15.7666 6.54772C16.1006 6.8529 16.4586 7.22347 16.5541 7.31066C16.9597 7.79022 17.1745 8.37878 17.1745 9.01311C17.1745 9.57768 16.9836 10.1444 16.6018 10.6022Z"
+                fill="currentColor" />
+            </svg>
+            <span class="text">Play previous</span>
+          </div>
+        </div>
         <div class="control-bar">
           <div class="album-cover">
             <img src="img/cover.jpg" alt="Album cover">
@@ -84,7 +116,22 @@
             <span class="dot"></span>
           </span>
         </div>
-        <div class="arrows next">Next</div>
+        <div class="arrows next">
+          <span class="up-next">
+            <span class="text">#03 Up Next</span>
+          </span>
+          <div class="song">
+            <h4 class="name">Don't stop believing</h4>
+          </div>
+          <div class="play-next">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M16.6018 10.6022C16.5302 10.6894 16.1961 11.06 15.9336 11.2998L15.7904 11.4305C13.7859 13.4142 8.79837 16.4006 6.26883 17.3597C6.26883 17.3815 4.76542 17.9482 4.04951 17.97H3.95406C2.85633 17.97 1.83019 17.4033 1.30519 16.4877C1.01883 15.9864 0.75633 14.5259 0.732466 14.5041C0.517694 13.1962 0.374512 11.1929 0.374512 8.98913C0.374512 6.67851 0.517694 4.58587 0.780194 3.29977C0.780194 3.27798 1.04269 2.10087 1.20974 1.7085C1.47224 1.14174 1.94951 0.66218 2.5461 0.357004C3.02338 0.139021 3.52451 0.0300293 4.04951 0.0300293C4.59838 0.0518276 5.62451 0.380982 6.03019 0.53139C8.70292 1.49052 13.8097 4.62947 15.7666 6.54772C16.1006 6.8529 16.4586 7.22347 16.5541 7.31066C16.9597 7.79022 17.1745 8.37878 17.1745 9.01311C17.1745 9.57768 16.9836 10.1444 16.6018 10.6022Z"
+                fill="currentColor" />
+            </svg>
+            <span class="text">Play next</span>
+          </div>
+        </div>
       </section>
       <!-- <section class="controls bottom">
         <div class="artist-info">
