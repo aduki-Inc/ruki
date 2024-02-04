@@ -477,7 +477,7 @@ section.controller>.arrows .play-next span.text {
 }
 
 #player-container>section.controller>.control-bar>.play-pause {
-  /* border: 1px solid #808080; */
+  border: 2px solid #b6b6b6;
   /* background-color: var(--background, #ffffff); */
   display: flex;
   align-items: center;
@@ -489,15 +489,15 @@ section.controller>.arrows .play-next span.text {
   cursor: pointer;
   z-index: 3;
   backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   position: absolute;
   top: calc(50% - 35px);
   left: calc(50% - 35px);
 }
 
 #player-container>section.controller>.control-bar>.play-pause svg {
-  width: 100%;
-  height: 100%;
+  width: 30px;
+  height: auto;
   /* background: linear-gradient(#53595f, #627ea0); */
   color: rgb(255, 147, 47);
   /* color: rgb(58, 165, 189); */
