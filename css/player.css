@@ -1,7 +1,7 @@
 /*
 
 Copyright: 2024 - Aduki Incorporation & Darkchesa Comics
-Name: Ruki playerr
+Name: Ruki Player
 URL: https://github.com/aduki-Inc/ruki.git
 Author: Fredrick Femar Ochieng
 Author URL: https://femar.me
@@ -302,7 +302,7 @@ section.controls>.artist-info>.fades>span.fade.first {
 }
 
 #player-container>section.controller>.control-bar  {
-  border: 1px solid rgb(255, 255, 255);
+  /* border: 1px solid rgb(255, 255, 255); */
   /* background-color: var(--background, #ffffff); */
   display: flex;
   align-items: end;
@@ -312,7 +312,30 @@ section.controls>.artist-info>.fades>span.fade.first {
   height: 250px;
   width: 250px;
   border-radius: 100%;
-  /* position: relative; */
+  position: relative;
+}
+
+#player-container>section.controller>.control-bar>.circular-line {
+  border: 1px solid #808080;
+  /* background-color: var(--background, #ffffff); */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 98%;
+  width: 98%;
+  border-radius: 50%;
+
+  position: absolute;
+  /* top: 0%; */
+  bottom: 0%;
+  /* left: 50%; */
+  /* rotate: -90deg; */
+  /* transform: translate(-50%, -50%); */
+  /* clip-path: polygon(0% 0%, 50% 0%, 50% 50%, 50% 100%, 0% 100%); */
+
+  clip-path: polygon(0% 50%, 0px 100%, 100% 100%, 100% 50%, 50% 50%);
+
+  /* clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 50% 100%, 100% 100%); */
 }
 
 @keyframes progress {
@@ -329,8 +352,8 @@ section.controls>.artist-info>.fades>span.fade.first {
 [role="progressbar"] {
   /* border: 1px solid red; */
   --percentage: var(--value);
-  --primary: #369;
-  --secondary: #adf;
+  --primary: rgb(223, 121, 26);
+  --secondary: rgba(170, 221, 255, 0);
   --size: 250px;
   animation: progress 2s 0.5s forwards;
   width: var(--size);
