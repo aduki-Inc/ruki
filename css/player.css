@@ -17,6 +17,13 @@ Author URL: https://femar.me
 :root {
   --font-main: 'Plus Jakarta Sans';
   --background: #ffffff;
+
+  /* Player progress bar*/
+  --value: 50;
+  --percentage: var(--value);
+  --primary: rgb(235, 135, 42);
+  --secondary: rgba(170, 221, 255, 0);
+  --size: 250px;
 }
 
 *,
@@ -93,7 +100,7 @@ ul li {
 }
 
 #player-container.player-container {
-  border: 1px solid rgb(78, 78, 78);
+  border: 1px solid #ffffffda;
   width: 80%;
   height: 90%;
   display: flex;
@@ -110,14 +117,6 @@ ul li {
   -webkit-backdrop-filter: blur(15px);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
-/* 
-  background: linear-gradient(180deg,
-    rgba(0, 0, 0, 0), 
-    rgba(0, 0, 0, 0),
-    rgba(0, 0, 0, 0.1),
-    rgba(0, 0, 0, 0.4),
-    rgb(0, 0, 0.7)
-  ); */
 
   background: linear-gradient(135deg,
   rgba(100, 172, 188, 0.9),
@@ -456,8 +455,10 @@ section.controller>.arrows .play-next span.text {
 }
 
 #player-container>section.controller>.control-bar>.album-cover {
-  border: 2px solid #a3a3a3cc;
+  border: 3px solid #ffffffc4;
   /* background-color: var(--background, #ffffff); */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -477,7 +478,7 @@ section.controller>.arrows .play-next span.text {
 }
 
 #player-container>section.controller>.control-bar>.play-pause {
-  border: 2px solid #b6b6b6;
+  /* border: 1px solid #808080; */
   /* background-color: var(--background, #ffffff); */
   display: flex;
   align-items: center;
@@ -488,25 +489,29 @@ section.controller>.arrows .play-next span.text {
   /* background-color: rgb(100, 172, 188); */
   cursor: pointer;
   z-index: 3;
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+  /* backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px); */
   position: absolute;
   top: calc(50% - 35px);
   left: calc(50% - 35px);
 }
 
 #player-container>section.controller>.control-bar>.play-pause svg {
-  width: 30px;
-  height: auto;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
   /* background: linear-gradient(#53595f, #627ea0); */
   color: rgb(255, 147, 47);
   /* color: rgb(58, 165, 189); */
+  border-radius: 50%;
 }
 
 @keyframes progress {
   0% { --percentage: 0 }
   100% { --percentage: var(--value); }
 }
+
 
 @property --percentage {
   syntax: '<number>';
@@ -516,10 +521,6 @@ section.controller>.arrows .play-next span.text {
 
 [role="progressbar"] {
   /* border: 1px solid red; */
-  --percentage: var(--value);
-  --primary: rgb(235, 135, 42);
-  --secondary: rgba(170, 221, 255, 0);
-  --size: 250px;
   animation: progress 2s 0.5s forwards;
   width: var(--size);
   height: calc(var(--size) / 2);
