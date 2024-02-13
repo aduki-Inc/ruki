@@ -19,7 +19,7 @@ Author URL: https://femar.me
   --background: #ffffff;
 
   /* Player progress bar*/
-  --value: 10;
+  --value: 50;
   --percentage: var(--value);
   --primary: rgb(235, 135, 42);
   --secondary: rgba(170, 221, 255, 0);
