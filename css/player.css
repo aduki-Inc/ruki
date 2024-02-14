@@ -4,7 +4,7 @@ Copyright: 2024 - Aduki Incorporation & Darkchesa Comics
 Name: Ruki Player
 URL: https://github.com/aduki-Inc/ruki.git
 Author: Fredrick Femar Ochieng
-Author URL: https://femar.me
+Author URL: https://femar.co.ke
 
 
 /* Fonts
@@ -324,13 +324,13 @@ section.status.top>.current-song>.fades>span.fade.first {
   border-top-right-radius: 0;
   background-color: #0000002d;
   background: linear-gradient(180deg,
-    rgba(0, 0, 0, 0), 
+    rgba(0, 0, 0, 0),
     rgba(0, 0, 0, 0.1),
     rgba(0, 0, 0, 0.2),
     rgba(0, 0, 0, 0.3),
-    rgba(0, 0, 0, 0.4), 
-    rgba(0, 0, 0, 0.5), 
-    rgba(0, 0, 0, 0.6), 
+    rgba(0, 0, 0, 0.4),
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.6),
     rgba(0, 0, 0, 0.7),
     rgba(0, 0, 0, 0.8),
     rgba(0, 0, 0, 0.9),
@@ -417,6 +417,30 @@ section.controller>.arrows .play-next span.text {
   position: absolute;
   bottom: 10px;
   left: calc(50% - calc(var(--width) / 2));
+}
+
+#player-container>section.controller>.control-bar>.point {
+  ---degrees: calc(clamp(var(--value), 0, 100) * 3.6deg);
+  border: 1px solid #80808817;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  min-height: 16px;
+  border-radius: 50px;
+  position: absolute;
+  left: calc(calc(var(--width)/2) * sin(var(---degrees)));
+  top: calc(calc(var(--width)/2) * cos(var(---degrees)));
+}
+
+#player-container>section.controller>.control-bar>.point span.dot {
+  /* border: 1px solid red; */
+  background-color: rgb(255, 147, 47);
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50px;
 }
 
 #player-container>section.controller>.control-bar>.time {
