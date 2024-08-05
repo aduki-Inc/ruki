@@ -442,7 +442,7 @@ section.controller > .arrows > .arrow .play-next span.text {
   justify-content: center;
   gap: 8px;
   position: relative;
-  padding: 0 8px 10px 50px;
+  padding: 0 8px 10px 10px;
 }
 
 .control-bar > .top {
@@ -514,7 +514,28 @@ section.controller > .arrows > .arrow .play-next span.text {
   margin: 2px 0 -2px 0;
 }
 
-.control-bar > .top > .volume-indicator {
+.control-bar > .top > .volume-control {
+  /* border: 1px solid #ffffff; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.control-bar > .top > .volume-control > input[type="range"] {
+  /* border: 1px solid #808080; */
+  width: 100px;
+  height: 10px;
+  /* -webkit-appearance: var(--second-linear); */
+  /* appearance: var(--second-linear); */
+  /* background: var(--second-linear); */
+  border-radius: 5px;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.control-bar > .top > .volume-control > .volume-indicator {
   /* border: 1px solid #ffffff; */
   display: flex;
   align-items: center;
@@ -522,7 +543,7 @@ section.controller > .arrows > .arrow .play-next span.text {
   gap: 0;
 }
 
-.control-bar > .top > .volume-indicator > svg {
+.control-bar > .top > .volume-control > .volume-indicator > svg {
   width: 23px;
   height: 23px;
   color: #dbdbdb;
@@ -530,12 +551,13 @@ section.controller > .arrows > .arrow .play-next span.text {
   /* margin: 4px 0 -2px 0; */
 }
 
-.control-bar > .top > .volume-indicator > .percentage {
+.control-bar > .top > .volume-control > .volume-indicator > .percentage {
   /* border: 1px solid #808080; */
   display: flex;
   align-items: center;
   justify-content: center;
   color: transparent;
+  /* font-size: 0.85rem; */
   background: var(--second-linear);
   -webkit-background-clip: text;
   background-clip: text;
@@ -566,27 +588,23 @@ section.controller > .arrows > .arrow .play-next span.text {
   display: flex;
   align-items: center;
   /* justify-content: center; */
-  gap: 25px;
+  gap: 10px;
 }
 
 .control-bar > .bottom > .play-pause {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 30px;
-  width: 30px;
+  height: 20px;
+  width: 20px;
   cursor: pointer;
   z-index: 3;
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
 .control-bar > .bottom > .play-pause svg {
   width: 100%;
   height: 100%;
-  margin: 0 0 0 -10px;
+  margin: 0 0 0 -2px;
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   color: rgb(255, 147, 47);
@@ -606,8 +624,8 @@ section.controller > .arrows > .arrow .play-next span.text {
 
 .control-bar > .bottom > .progress-bar {
   border: 1px solid #80808017; 
-  width: 100%;
-  height: 8px;
+  width: calc(100% - 45px);
+  height: 10px;
   display: flex;
   align-items: center;
   border-radius: 6px;
@@ -620,7 +638,7 @@ section.controller > .arrows > .arrow .play-next span.text {
   background: var(--second-linear);
   /* animation: progress 2s 0.5s forwards; */
   width: calc(var(--percentage) * 1%);
-  height: 6px;
+  height: 10px;
   position: relative;
   display: flex;
   align-items: flex-end;
@@ -634,8 +652,8 @@ section.controller > .arrows > .arrow .play-next span.text {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 14px;
-  min-height: 14px;
+  min-width: 18px;
+  min-height: 18px;
   border-radius: 50px;
   position: absolute;
   left: calc(var(--percentage) * 1% - 8px);
@@ -644,8 +662,8 @@ section.controller > .arrows > .arrow .play-next span.text {
 .control-bar > .bottom > .progress-bar > .point span.dot {
   background: var(--second-linear);
   display: inline-block;
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
   border-radius: 50px;
 }
 
