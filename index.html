@@ -108,13 +108,13 @@
     // Usage
     const controlBar = document.querySelector('.control-bar');
     const lyricsContainer = document.querySelector('.lyrics-container');
-    const audioPlayer = new AudioPlayer('/music/bhr.mp3', controlBar);
+    const audioPlayer = new AudioPlayer('./music/bhr.mp3', controlBar);
     const lyricsManager = new LyricsManager(lyricsContainer, audioPlayer);
 
     // Load lyrics
     // lyricsManager.loadLyrics('/music/hhr.lrc', 'srt');
     // Or for custom format:
-    lyricsManager.loadLyrics('/music/bhr.lrc', 'lrc');
+    lyricsManager.loadLyrics('./music/bhr.lrc', 'lrc');
 
     // Connect the LyricsManager to the AudioPlayer
     audioPlayer.setLyricsManager(lyricsManager);
