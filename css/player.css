@@ -514,57 +514,6 @@ section.controller > .arrows > .arrow .play-next span.text {
   margin: 2px 0 -2px 0;
 }
 
-.control-bar > .top > .volume-control {
-  /* border: 1px solid #ffffff; */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-}
-
-.control-bar > .top > .volume-control > input[type="range"] {
-  /* border: 1px solid #808080; */
-  width: 100px;
-  height: 10px;
-  /* -webkit-appearance: var(--second-linear); */
-  /* appearance: var(--second-linear); */
-  /* background: var(--second-linear); */
-  border-radius: 5px;
-  outline: none;
-  opacity: 0.7;
-  transition: opacity 0.2s;
-}
-
-.control-bar > .top > .volume-control > .volume-indicator {
-  /* border: 1px solid #ffffff; */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
-}
-
-.control-bar > .top > .volume-control > .volume-indicator > svg {
-  width: 23px;
-  height: 23px;
-  color: #dbdbdb;
-  display: inline-block;
-  /* margin: 4px 0 -2px 0; */
-}
-
-.control-bar > .top > .volume-control > .volume-indicator > .percentage {
-  /* border: 1px solid #808080; */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: transparent;
-  /* font-size: 0.85rem; */
-  background: var(--second-linear);
-  -webkit-background-clip: text;
-  background-clip: text;
-  font-weight: 700;
-  font-family: 'Jetbrains Mono';
-} 
-
 .control-bar > .top > .repeate {
   /* border: 1px solid #ffffff; */
   display: flex;

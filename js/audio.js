@@ -1,14 +1,14 @@
-class AudioPlayer {
+export default class AudioPlayer {
   constructor(audioUrl, controlBar) {
     this.audioUrl = audioUrl;
     this.controlBar = controlBar;
     this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
     this.sourceNode = null;
-    this.gainNode = null;
     this.audioBuffer = null;
     this.startedAt = 0;
     this.pausedAt = 0;
     this.isPlaying = false;
+    this.lyricsManager = null;
 
     this.playIcon = /*html*/`
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" color="currentColor">
@@ -39,10 +39,9 @@ class AudioPlayer {
 
     this.forwardSeek = controlBar.querySelector('.seek.forward');
     this.backwardSeek = controlBar.querySelector('.seek.backward');
-    this.volumeIndicator = controlBar.querySelector('.volume-indicator .percentage');
+
     
     this.isLoading = false;
-    this.volume = 1; // Default volume is 100%
 
     this.setupEventListeners();
     this.loadAudio();
@@ -55,12 +54,11 @@ class AudioPlayer {
   }
 
   async loadAudio() {
-    this.initAudioContext(); // Initialize AudioContext here
+    this.initAudioContext();
     const response = await fetch(this.audioUrl);
     const arrayBuffer = await response.arrayBuffer();
     this.audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
     this.updateDuration();
-    this.setVolume(this.volume); // Set initial volume
   }
 
   async loadAndPlayAudio() {
@@ -74,7 +72,6 @@ class AudioPlayer {
       const arrayBuffer = await response.arrayBuffer();
       this.audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
       this.updateDuration();
-      this.setVolume(this.volume); // Set initial volume
       this.play();
     } catch (error) {
       console.error('Error loading audio:', error);
@@ -123,21 +120,6 @@ class AudioPlayer {
 
     this.forwardSeek.addEventListener('click', () => this.seekRelative(10));
     this.backwardSeek.addEventListener('click', () => this.seekRelative(-10));
-    
-    // Add volume control (you'll need to implement a volume slider in your HTML)
-    const volumeSlider = this.controlBar.querySelector('input.volume-slider');
-    if (volumeSlider) {
-      volumeSlider.addEventListener('input', (e) => this.setVolume(e.target.value / 100));
-      // Set initial slider value
-      volumeSlider.value = this.volume * 100;
-    }
-  }
-
-  updateVolumeSlider() {
-    const volumeSlider = this.controlBar.querySelector('input.volume-slider');
-    if (volumeSlider) {
-      volumeSlider.value = this.volume * 100;
-    }
   }
 
   seekRelative(seconds) {
@@ -154,19 +136,6 @@ class AudioPlayer {
       this.pausedAt = newTime;
       this.updateProgress();
     }
-  }
-
-  setVolume(value) {
-    this.volume = Math.max(0, Math.min(1, value));
-    if (this.gainNode) {
-      this.gainNode.gain.setValueAtTime(this.volume, this.audioContext.currentTime);
-    }
-    this.updateVolumeIndicator();
-    this.updateVolumeSlider();
-  }
-
-  updateVolumeIndicator() {
-    this.volumeIndicator.textContent = `${Math.round(this.volume * 100)}%`;
   }
 
   play() {
@@ -204,7 +173,6 @@ class AudioPlayer {
 
     this.updatePlayPauseButton();
     this.startProgressUpdate();
-    this.setVolume(this.volume); // Set initial volume
   }
 
   pause() {
@@ -244,15 +212,29 @@ class AudioPlayer {
   }
 
   startDragging(e) {
+    const rect = this.progressBar.getBoundingClientRect();
+  
     const handleMouseMove = (moveEvent) => {
-      this.seek(moveEvent);
+      let x = moveEvent.clientX - rect.left;
+      x = Math.max(0, Math.min(x, rect.width)); // Constrain x within the progress bar
+      const percentage = x / rect.width;
+      const seekTime = percentage * this.audioBuffer.duration;
+  
+      this.pausedAt = seekTime;
+  
+      if (this.isPlaying) {
+        this.stop();
+        this.play();
+      } else {
+        this.updateProgress();
+      }
     };
-
+  
     const handleMouseUp = () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
     };
-
+  
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
   }
@@ -263,6 +245,10 @@ class AudioPlayer {
     let elapsed = this.isPlaying
       ? this.audioContext.currentTime - this.startedAt
       : this.pausedAt;
+
+    if (this.lyricsManager) {
+      this.lyricsManager.sync(elapsed);
+    }
     
     if (elapsed >= this.audioBuffer.duration) {
       elapsed = this.audioBuffer.duration;
@@ -277,6 +263,10 @@ class AudioPlayer {
 
     this.progressBar.style.setProperty('--percentage', percentage);
     this.currentTimeSpan.textContent = this.formatTime(elapsed);
+  }
+
+  setLyricsManager(lyricsManager) {
+    this.lyricsManager = lyricsManager;
   }
 
   updatePlayPauseButton() {
@@ -310,18 +300,6 @@ class AudioPlayer {
     requestAnimationFrame(update);
   }
 
-  updateProgress() {
-    if (!this.audioBuffer) return;
-
-    const elapsed = this.isPlaying
-      ? this.audioContext.currentTime - this.startedAt
-      : this.pausedAt;
-    const percentage = (elapsed / this.audioBuffer.duration) * 100;
-
-    this.progressBar.style.setProperty('--percentage', percentage);
-    this.currentTimeSpan.textContent = this.formatTime(elapsed);
-  }
-
   updateDuration() {
     if (!this.audioBuffer) return;
     this.allTimeSpan.textContent = this.formatTime(this.audioBuffer.duration);
@@ -333,7 +311,3 @@ class AudioPlayer {
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   }
 }
-
-// Usage
-const controlBar = document.querySelector('.control-bar');
-const player = new AudioPlayer('/music/kota.mp3', controlBar);
