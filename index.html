@@ -13,7 +13,6 @@
   <div class="container" id="container">
     <div class="player-container" id="player-container">
       <section class="status top">
-        <div class="left">Left</div>
         <div class="current-song">
           <div class="cover">
             <img src="img/cover.jpg" alt="Cover Image">
@@ -24,8 +23,8 @@
             <span class="fade last"></span>
           </div>
           <div class="info">
-            <h4 class="song-title">Keep On Loving You</h4>
-            <span class="artist">REO Speedwagon</span>
+            <h4 class="song-title">Bohemian Rhapsody</h4>
+            <span class="artist">Queen</span>
           </div>
         </div>
         <div class="right">Right</div>
@@ -39,7 +38,6 @@
           </span>
         </div>
       </section>
-      <section class="extras right">Right</section>
       <section class="controller footer">
         <div class="arrows">
           <div class="arrow next">
@@ -110,7 +108,7 @@
     // Usage
     const controlBar = document.querySelector('.control-bar');
     const lyricsContainer = document.querySelector('.lyrics-container');
-    const audioPlayer = new AudioPlayer('/music/kota.mp3', controlBar);
+    const audioPlayer = new AudioPlayer('/music/bhr.mp3', controlBar);
     const lyricsManager = new LyricsManager(lyricsContainer, audioPlayer);
 
     // Load lyrics
