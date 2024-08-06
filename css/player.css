@@ -337,7 +337,7 @@ section.status.top>.current-song>.fades>span.fade.first {
 /* Player Controller */
 #player-container.player-container>section.controller {
   /* border: 3px solid #ff0000; */
-  border-top: 1px solid var(--accent);
+  /* border-top: 1px solid var(--accent); */
   height: max-content;
   display: flex;
   flex-flow: column;
@@ -352,10 +352,10 @@ section.status.top>.current-song>.fades>span.fade.first {
   border-radius: inherit;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-  background: linear-gradient(180deg, #00000000, #000000);
-  background-color: var(--accent);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+  background: linear-gradient(180deg, #0000009f, #000000);
+  /* background-color: var(--accent); */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 section.controller > .arrows {
@@ -654,8 +654,7 @@ section.lyrics > div.lyrics-container {
   flex-flow: column;
   align-items: center;
   justify-content: start;
-  gap: 5px;
-
+  gap: 10px;
   overflow-y: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -669,13 +668,12 @@ section.lyrics>div.lyrics-container > span {
   /* border: 1px solid white; */
   width: 100%;
   max-width: 100%;
-  font-size: 1.4rem;
+  font-size: 1.15rem;
   line-height: 1.4;
   text-align: center;
   font-weight: 500;
   color: #cecece;
   text-shadow: 0 4px 10px 0 #000000;
-
   font-family: 'Plus Jakarta Sans';
 }
 
@@ -683,13 +681,14 @@ section.lyrics>div.lyrics-container>span.current {
   /* border: 1px solid white; */
   color: #ffffff;
   font-size: 2rem;
-  font-weight: 900;
+  font-weight: 1000;
   line-height: 1.2;
   display: flex;
-  padding: 15px 0;
+  padding: 20px 0 0;
   align-items: center;
   justify-content: center;
   text-align: center;
+  text-shadow: 0 4px 10px 10px #000000;
 }
 
 section.lyrics>div.lyrics-container>span.next {
@@ -736,12 +735,12 @@ section.lyrics>div.lyrics-container>span.dots > span.dot {
 
   #player-container.player-container>section.controller {
     /* border: 3px solid #ff0000; */
-    border-top: 1px solid var(--accent);
+    /* border-top: 1px solid var(--accent); */
     display: flex;
     flex-flow: column;
     align-items: center;
     justify-content: center;
-    gap: 0;
+    gap: 5px;
     width: 100%;
     height: max-content;
     position: fixed;
@@ -749,6 +748,9 @@ section.lyrics>div.lyrics-container>span.dots > span.dot {
     right: 0;
     left: 0;
     border-radius: 0;
+    background: linear-gradient(180deg, #000000c0, #000000);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
 
   .control-bar  {
@@ -760,9 +762,9 @@ section.lyrics>div.lyrics-container>span.dots > span.dot {
     /* align-items: center; */
     flex-flow: column;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
     position: relative;
-    padding: 0 8px 10px 10px;
+    padding: 0 8px 20px 10px;
     border-radius: 0;
   }
 }
