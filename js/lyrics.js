@@ -64,25 +64,44 @@ export default class LyricsManager {
   }
 
   renderLyrics() {
+    const dots = /*html*/`
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    `
     this.lyricsContainer.innerHTML = '';
     this.lyrics.forEach((line, index) => {
+      // check if the line is empty or is --- (add dots)
+      if (line.text === '' || line.text === '---') {
+        const span = document.createElement('span');
+        span.innerHTML = dots;
+        span.classList.add('line');
+        span.classList.add('dots');
+        this.lyricsContainer.appendChild(span);
+        // span.addEventListener('click', () => this.seekToLine(index));
+        return;
+      }
+
       const span = document.createElement('span');
       span.textContent = line.text;
       span.classList.add('line');
-      if (index === 0) span.classList.add('next');
+      span.addEventListener('click', () => this.seekToLine(index));
       this.lyricsContainer.appendChild(span);
     });
   }
 
+  seekToLine(index) {
+    const time = this.lyrics[index].time;
+    this.audioPlayer.seekTo(time);
+  }
+
   sync(currentTime) {
-    // console.log('Syncing lyrics at time:', currentTime); // Debug log
     const newLineIndex = this.lyrics.findIndex(
       (line, index) => currentTime >= line.time && 
         (index === this.lyrics.length - 1 || currentTime < this.lyrics[index + 1].time)
     );
 
     if (newLineIndex !== this.currentLineIndex) {
-      // console.log('Updating to line index:', newLineIndex); // Debug log
       this.updateLyricsDisplay(newLineIndex);
       this.currentLineIndex = newLineIndex;
     }
@@ -100,7 +119,21 @@ export default class LyricsManager {
     });
 
     if (currentIndex >= 0) {
-      lines[currentIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      this.smoothScrollToLine(lines[currentIndex]);
     }
+  }
+
+  smoothScrollToLine(element) {
+    const containerHeight = this.lyricsContainer.clientHeight;
+    const elementTop = element.offsetTop;
+    const targetScrollTop = elementTop - containerHeight / 2 + element.clientHeight / 2;
+
+    this.lyricsContainer.style.scrollBehavior = 'smooth';
+    this.lyricsContainer.scrollTop = targetScrollTop + 50;
+
+    // Reset scroll behavior after animation
+    setTimeout(() => {
+      this.lyricsContainer.style.scrollBehavior = 'auto';
+    }, 1000);
   }
 }
