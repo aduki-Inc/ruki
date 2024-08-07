@@ -13,14 +13,18 @@ Author URL: https://femar.co.ke
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Sen:wght@400;500;600;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
 /* Normalize
 ==================================== */
 :root {
   --accent: #f8b61e;
+  --background: #000000;
 
   /* fonts */
   --font-lyrics: 'Comic Neue';
+  --font-main: 'Plus Jakarta Sans';
+  --font-alt: 'Sen';
 
   /* Deep Crimson (Bass notes) */
   --deep-crimson: #990000;
@@ -47,12 +51,8 @@ Author URL: https://femar.co.ke
   --pale-rose-light: #FFF0ED;
   --pale-rose-dark: #FFD8D3;
 
-  --font-main: 'Plus Jakarta Sans';
-  --background: #ffffff;
-
   /* Player progress bar*/
-  --value: 90;
-  --percentage: var(--value);
+  --percentage: 0;
   --primary: crimson;
   --secondary: #f1f1f1;
   --action-linear: linear-gradient(#53595f, #627ea0);
@@ -77,7 +77,7 @@ Author URL: https://femar.co.ke
 *:before {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  font-family: var(--font-main), sans-serif;
+  font-family: inherit;
 }
 
 *:focus {
@@ -101,10 +101,19 @@ a {
   text-decoration: none;
 }
 
+html {
+  font-size: 16px;
+  font-family: var(--font-main), sans-serif;
+  scroll-behavior: smooth;
+}
 body {
+  /* border: 3px solid #00ff22; */
+  height: 100vh;
+  width: 100vw;
   padding: 0;
   margin: 0;
   overflow: hidden;
+  background: var(--background);
 }
 
 /* Typography
@@ -148,6 +157,7 @@ ul li {
 #player-container.player-container {
   /* border: 1px solid #ffffffda; */
   width: 80%;
+  max-width: 900px;
   height: 90%;
   display: flex;
   flex-flow: column;
@@ -169,6 +179,7 @@ ul li {
   background-size: 400% 400%;
   animation: gradient 20s ease infinite;
   overflow: hidden;
+  padding: 0;
 }
 
 @keyframes gradient {
@@ -185,17 +196,66 @@ ul li {
   }
 }
 
-#player-container.player-container>section.status.top {
-  /* border-bottom: 1px solid #ffffff; */
-  height: 60px;
+#player-container.player-container > section.status {
+  /* border-bottom: 1px solid #ececec85; */
+  width: 100%;
+  height: max-content;
+  padding: 8px 10px 15px;
+  display: flex;
+  flex-flow: column;
+  gap: 18px;
+  /* border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px; */
+  /* backdrop-filter: blur(0.5px);
+  -webkit-backdrop-filter: blur(0.5px); */
+  background: linear-gradient(180deg, #0000008e, #00000000);
+}
+
+#player-container.player-container > section.status > div.options {
+  /* border: 1px solid #ffffff; */
+  width: 100%;
+  height: max-content;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  margin-left: -10px;
+  gap: 15px;
+  padding: 0;
+}
+
+#player-container.player-container > section.status > div.options > .option {
+  /* border: 1px solid #ffffff; */
+  width: max-content;
+  height: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 10px 4px;
+  border-radius: 50px;
+  cursor: pointer;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 0.95rem;
+  font-family: var(--font-alt);
+  background: #b2418c83;
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
 }
 
-section.status.top > .current-song {
+#player-container.player-container > section.status > div.options > .option.active {
+  border: 1px solid #ffffff;
+}
+
+#player-container.player-container > section.status > div.top {
+  /* border: 1px solid #1058df; */
+  width: 100%;
+  height: max-content;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#player-container.player-container > section.status > div.top > .current-song {
   /* border: 1px solid #ffffff; */
   width: 80%;
   display: flex;
@@ -205,7 +265,7 @@ section.status.top > .current-song {
   position: relative;
 }
 
-section.status.top>.current-song .info {
+#player-container.player-container > section.status > div.top > .current-song .info {
   /* border: 1px solid #ffffff; */
   width: calc(100% - 40px);
   display: flex;
@@ -214,7 +274,7 @@ section.status.top>.current-song .info {
   justify-content: center;
 }
 
-section.status.top>.current-song .info>h4.song-title {
+#player-container.player-container > section.status > div.top .info > h4.song-title {
   /* border: 1px solid #ffffff; */
   margin: 0;
   width: 100%;
@@ -254,39 +314,52 @@ section.status.top>.current-song .info>h4.song-title {
   }
 }
 
-section.status.top>.current-song .info>span.artist {
+#player-container.player-container > section.status > div.top > .current-song .info > span.artist {
+  /* border: 1px solid #ffffff; */
   margin: 0;
+  width: 100%;
+  max-width: 100%;
   font-family: 'Plus Jakarta Sans';
   font-size: 0.85rem;
   color: #ebebeb;
   opacity: .75;
   font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-section.status.top>.current-song>.cover {
+#player-container.player-container > section.status > div.top > .current-song > .cover {
   width: 40px;
   height: 40px;
   min-width: 40px;
+  min-height: 40px;
   display: flex;
   flex-flow: column;
   align-items: center;
   justify-content: center;
+  position: relative;
   overflow: hidden;
   border-radius: 10px;
 }
 
-section.status.top>.current-song>.cover>img {
+#player-container.player-container > section.status > div.top > .current-song > .cover > img {
   width: 100%;
   height: 100%;
+  min-width: 100%;
+  min-height: 100%;
   object-fit: cover;
 }
 
-section.status.top>.current-song .fades {
-  /* border-bottom: 1px solid #ffffff; */
+#player-container.player-container > section.status > div.top > .current-song .fades {
+  /* border: 3px solid #8eee0f; */
   position: absolute;
-  left: 12px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   max-height: 30px;
   height: 30px;
+  width: max-content;
   display: flex;
   flex-flow: row;
   align-items: center;
@@ -294,7 +367,7 @@ section.status.top>.current-song .fades {
   gap: 3px;
 }
 
-section.status.top>.current-song>.fades>span.fade {
+#player-container.player-container > section.status > div.top >.current-song .fades > span.fade {
   background-color: #ffffff;
   display: inline-block;
   width: 3px;
@@ -302,12 +375,12 @@ section.status.top>.current-song>.fades>span.fade {
   border-radius: 10px;
 }
 
-section.status.top>.current-song>.fades>span.fade.last {
+#player-container.player-container > section.status > div.top >.current-song .fades > span.fade.last {
   /* height: 20px; */
   animation: classic 1s linear infinite;
 }
 
-section.status.top>.current-song>.fades>span.fade.first {
+#player-container.player-container > section.status > div.top >.current-song .fades > span.fade.first {
   /* height: 20px; */
   animation: classic-reverse 1s linear infinite;
 }
@@ -342,7 +415,7 @@ section.status.top>.current-song>.fades>span.fade.first {
 }
 
 
-#player-container.player-container>section.lyrics {
+#player-container.player-container>section.content {
   border: none;
   /* background-color: var(--background, #ffffff); */
   height: calc(100% - 150px);
@@ -602,7 +675,7 @@ section.controller > .arrows > .arrow .play-next span.text {
 
 @keyframes progress {
   0% { --percentage: 0 }
-  100% { --percentage: var(--value); }
+  100% { --percentage: 100 }
 }
 
 @property --percentage {
@@ -623,7 +696,7 @@ section.controller > .arrows > .arrow .play-next span.text {
 }
 
 .control-bar > .bottom > .progress-bar > .progress {
-  transition: all 50ms ease-in-out;
+  /* transition: all 50ms ease-in-out; */
   background: var(--second-linear);
   /* animation: progress 2s 0.5s forwards; */
   width: calc(var(--percentage) * 1%);
@@ -632,7 +705,8 @@ section.controller > .arrows > .arrow .play-next span.text {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  border-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 .control-bar > .bottom > .progress-bar > .point {
@@ -665,27 +739,30 @@ section.controller > .arrows > .arrow .play-next span.text {
   100% { transform: rotate(360deg); }
 }
 
-
-
 /* Lyrics section */
-#player-container.player-container > section.lyrics {
+#player-container.player-container > section.content {
   /* border: 3px solid #dd0404; */
   /* background-color: var(--background, #ffffff); */
-  height: calc(100% - 150px);
-  width: 95%;
+  height: calc(100% - 180px);
+  width: 100%;
   display: flex;
-  flex-flow: column;
   align-items: center;
   justify-content: start;
   position: relative;
-  /* Morph */
-  /* background: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px); */
+  overflow-x: scroll;
+  padding: 0;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-section.lyrics > div.lyrics-container {
-  padding: 70px 0 42% 0;
+#player-container.player-container > section.content::-webkit-scrollbar {
+  display: none !important;
+  visibility: hidden;
+}
+
+#player-container.player-container > section.content > div.section {
+  /* border: 1px solid #df1010; */
+  min-width: 100%;
   width: 100%;
   max-width: 100%;
   height: 100%;
@@ -699,16 +776,28 @@ section.lyrics > div.lyrics-container {
   scrollbar-width: none;
 }
 
-section.lyrics>div.lyrics-container::-webkit-scrollbar {
+#player-container.player-container > section.content > div.section::-webkit-scrollbar {
   display: none !important;
   visibility: hidden;
 }
 
-section.lyrics>div.lyrics-container > span {
+#player-container.player-container > section.content > div.section.lyrics-container {
+  /* border: 4px solid #21df10; */
+  padding: 70px 0 42% 0;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+  overflow-y: scroll;
+}
+
+section.content > div.lyrics-container > span {
   /* border: 1px solid white; */
   width: max-content;
   max-width: 95%;
-  font-size: 1rem;
+  font-size: 1.25rem;
   line-height: 1.2;
   text-align: center;
   cursor: pointer;
@@ -719,7 +808,7 @@ section.lyrics>div.lyrics-container > span {
   overflow: wrap;
 }
 
-section.lyrics>div.lyrics-container>span.current {
+section.content>div.lyrics-container>span.current {
   /* border: 1px solid white; */
   /* transition: all 0.05s ease-out; */
   color: #ffffff;
@@ -734,12 +823,12 @@ section.lyrics>div.lyrics-container>span.current {
   text-shadow: 0 2px 4px 0 #000000;
 }
 
-section.lyrics>div.lyrics-container>span.next {
+section.content>div.lyrics-container>span.next {
   /* border: 1px solid white; */
   padding: 0;
 }
 
-section.lyrics>div.lyrics-container>span.dots {
+section.content>div.lyrics-container>span.dots {
   /* border: 1px solid white; */
   margin: 0;
   display: flex;
@@ -751,7 +840,7 @@ section.lyrics>div.lyrics-container>span.dots {
   max-height: 0;
 }
 
-section.lyrics>div.lyrics-container>span.dots.current {
+section.content>div.lyrics-container>span.dots.current {
   /* border: 1px solid white; */
   display: flex;
   align-items: center;
@@ -762,7 +851,7 @@ section.lyrics>div.lyrics-container>span.dots.current {
   max-height: max-content;
 }
 
-section.lyrics>div.lyrics-container>span.dots.current > span.dot {
+section.content>div.lyrics-container>span.dots.current > span.dot {
   display: inline-block;
   width: 15px;
   height: 15px;
@@ -785,7 +874,7 @@ section.lyrics>div.lyrics-container>span.dots.current > span.dot {
     border-radius: 0;
   }
 
-  #player-container.player-container>section.status.top {
+  #player-container.player-container>#player-container.player-container > section.status > div.top  {
     height: 70px;
   }
 
@@ -844,7 +933,7 @@ section.lyrics>div.lyrics-container>span.dots.current > span.dot {
   .control-bar > .top > .custom-seek > .seek,
   .control-bar > .top > .repeate,
   .control-bar > .bottom > .progress-bar,
-  section.lyrics>div.lyrics-container > span {
+  section.content>div.lyrics-container > span {
     cursor: default !important;
   }
 }

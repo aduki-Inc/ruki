@@ -12,43 +12,76 @@
 <body>
   <div class="container" id="container">
     <div class="player-container" id="player-container">
-      <section class="status top">
-        <div class="current-song">
-          <div class="cover">
-            <img src="img/cover.jpg" alt="Cover Image">
+      <section class="status">
+        <div class="top">
+          <div class="current-song">
+            <div class="cover">
+              <img src="img/cover.jpg" alt="Cover Image">
+              <div class="fades">
+                <span class="fade last"></span>
+                <span class="fade first"></span>
+                <span class="fade last"></span>
+              </div>
+            </div>
+            <div class="info">
+              <h4 class="song-title can-overflow">Bohemian Rhapsody (Remastered 2011)</h4>
+              <span class="artist">Queen</span>
+            </div>
           </div>
-          <div class="fades">
-            <span class="fade last"></span>
-            <span class="fade first"></span>
-            <span class="fade last"></span>
-          </div>
-          <div class="info">
-            <h4 class="song-title">Bohemian Rhapsody (Remastered 2011)</h4>
-            <span class="artist">Queen</span>
+          <div class="right">
+            <span class="icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#000000" fill="none">
+                <path d="M2 3L20 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M2 10L15 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M2 17L9 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M18.25 19C18.25 20.6569 16.8509 22 15.125 22C13.3991 22 12 20.6569 12 19C12 17.3431 13.3991 16 15.125 16C16.8509 16 18.25 17.3431 18.25 19ZM18.25 19V10C18.6667 10.6 19 13.12 22 13.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
           </div>
         </div>
-        <div class="right">Right</div>
+        <div class="options">
+          <span class="option overview">
+            <span class="text">Overview</span>
+          </span>
+          <span class="option lyrics active">
+            <span class="text">Lyrics</span>
+          </span>
+          <span class="option songs">
+            <span class="text">Tracks</span>
+          </span>
+        </div>
       </section>
-      <section class="lyrics">
-        <div class="lyrics-container">
+      <section class="content">
+        <div class="section overview" style="display: none;">
+          ABOUT SONG
+        </div>
+        <div class="section lyrics-container">
           <span class="dots current">
             <span class="dot"></span>
             <span class="dot"></span>
             <span class="dot"></span>
           </span>
         </div>
-      </section>
-      <section class="controller footer">
-        <div class="arrows">
-          <div class="arrow next">
-            <span class="up-next">
-              <span class="text">#03 Up Next</span>
-            </span>
-            <div class="song">
-              <h4 class="name">Don't stop believing</h4>
+        <div class="section songs" style="display: none;">
+          <h4 class="title">Songs</h4>
+          <div class="song">
+            <div class="info">
+              <h4 class="name">Bohemian Rhapsody (Remastered 2011)</h4>
+              <span class="duration">5:54</span>
             </div>
           </div>
         </div>
+        <div class="section artists" style="display: none;">
+          <h4 class="title">Artists</h4>
+          <div class="artist">
+            <div class="info">
+              <h4 class="name">Queen</h4>
+              <span class="role">Band</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="controller footer">
         <div class="control-bar">
           <div class="top">
             <div class="time-container">
@@ -109,7 +142,7 @@
                 <path d="M13.9405 6.337C15.5735 7.26468 16.8567 7.99369 17.7709 8.66148C18.6913 9.33386 19.3721 10.0366 19.6159 10.9632C19.7947 11.6426 19.7947 12.3574 19.6159 13.0368C19.3721 13.9634 18.6913 14.6661 17.7709 15.3385C16.8567 16.0063 15.5735 16.7353 13.9406 17.663L13.9406 17.663C12.3632 18.5591 11.033 19.3148 10.0232 19.7444C9.0053 20.1773 8.07729 20.3968 7.17536 20.1412C6.51252 19.9533 5.90941 19.5968 5.42356 19.1066C4.76419 18.4414 4.49951 17.5219 4.37429 16.4154C4.24998 15.3169 4.24999 13.879 4.25 12.0501V12.0501V11.9499V11.9499C4.24999 10.121 4.24998 8.68309 4.37429 7.58464C4.49951 6.4781 4.76419 5.55861 5.42356 4.89335C5.90941 4.40317 6.51252 4.04666 7.17536 3.85883C8.07729 3.60325 9.0053 3.82269 10.0232 4.25565C11.033 4.68516 12.3632 5.44084 13.9405 6.337Z" fill="url(#gradient1)">
               </svg>
             </div>
-            <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
               <div class="progress"></div>
               <span class="point">
                 <span class="dot"></span>
@@ -127,9 +160,9 @@
     import AudioPlayer from './js/audio.js';
 
     const audioMetaData = {
-      title: 'Bohemian Rhapsody(Remastered 2011)',
+      title: 'Bohemian Rhapsody (Remastered 2011)',
       artist: 'Queen',
-      album: 'Bohemian Rhapsody(The Original Soundtrack)',
+      album: 'Bohemian Rhapsody (The Original Soundtrack)',
       lyrics: './music/bhr.lrc',
       audio: './music/bhr.mp3',
       artwork: [
@@ -182,7 +215,7 @@
 
     // Animate title
     function setupScrollingText() {
-    const songTitles = document.querySelectorAll('.song-title');
+    const songTitles = document.querySelectorAll('.can-overflow');
     
     songTitles.forEach(title => {
       // Create a temporary element to measure the text width
