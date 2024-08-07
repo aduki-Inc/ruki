@@ -3,10 +3,6 @@ export default class AudioPlayer {
     this.audioMetaData = audioMetaData;
     this.audioUrl = this.audioMetaData.audio;
     this.controlBar = controlBar;
-
-    this.audioElement = controlBar.querySelector('#audio-element');
-    this.audioElement.src = this.audioUrl;
-
     this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
     this.sourceNode = null;
     this.audioBuffer = null;
@@ -69,15 +65,35 @@ export default class AudioPlayer {
     this.isLoading = false;
 
     this.setupEventListeners();
+    this.loadAudio();
+  }
+
+  initAudioContext() {
+    if (!this.audioContext) {
+      this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+  }
+
+  async loadAudio() {
+    this.initAudioContext();
+    const response = await fetch(this.audioUrl);
+    const arrayBuffer = await response.arrayBuffer();
+    this.audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
+    this.updateDuration();
+    // set up mediaSession API
+    this.setupMediaSession();
   }
 
   async loadAndPlayAudio() {
-    if (this.isLoading) return;
+    if (this.isLoading || this.audioBuffer) return;
+
     this.isLoading = true;
     this.updatePlayPauseButton();
 
     try {
-      await this.audioElement.load();
+      const response = await fetch(this.audioUrl);
+      const arrayBuffer = await response.arrayBuffer();
+      this.audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
       this.updateDuration();
       this.play();
     } catch (error) {
@@ -85,6 +101,8 @@ export default class AudioPlayer {
     } finally {
       this.isLoading = false;
       this.updatePlayPauseButton();
+      // set up mediaSession API
+      this.setupMediaSession();
     }
   }
 
@@ -93,49 +111,35 @@ export default class AudioPlayer {
 
     if (this.isPlaying) {
       this.pause();
-    } else {
+    } else if (this.audioBuffer) {
       this.play();
+    } else {
+      this.loadAndPlayAudio();
     }
   }
 
   setupEventListeners() {
-    this.audioElement.addEventListener('loadedmetadata', () => {
-      this.updateDuration();
-    });
-
-    this.audioElement.addEventListener('timeupdate', () => {
-      this.updateProgress();
-    });
-
-    this.audioElement.addEventListener('play', () => {
-      this.isPlaying = true;
-      this.updatePlayPauseButton();
-      // set up mediaSession API
-      this.setupMediaSession();
-      navigator.mediaSession.playbackState = 'playing';
-    });
-
-    this.audioElement.addEventListener('pause', () => {
-      this.isPlaying = false;
-      this.updatePlayPauseButton();
-      navigator.mediaSession.playbackState = 'paused';
-    });
-
-    this.audioElement.addEventListener('ended', () => {
-      this.isPlaying = false;
-      this.updatePlayPauseButton();
-      navigator.mediaSession.playbackState = 'none';
-    });
+    let firstInteraction = true;
+    
+    const handleFirstInteraction = () => {
+      if (firstInteraction) {
+        this.loadAudio();
+        firstInteraction = false;
+      }
+    };
   
     this.playPauseButton.addEventListener('click', () => {
+      handleFirstInteraction();
       this.togglePlayPause();
     });
     
     this.progressBar.addEventListener('click', (e) => {
+      handleFirstInteraction();
       this.seek(e);
     });
     
     this.progressPoint.addEventListener('mousedown', (e) => {
+      handleFirstInteraction();
       this.startDragging(e);
     });
 
@@ -144,41 +148,105 @@ export default class AudioPlayer {
   }
 
   seekRelative(seconds) {
-    this.audioElement.currentTime += seconds;
-    this.updateProgress();
+    if (!this.audioBuffer) return;
+
+    let newTime = (this.isPlaying ? this.audioContext.currentTime - this.startedAt : this.pausedAt) + seconds;
+    newTime = Math.max(0, Math.min(newTime, this.audioBuffer.duration));
+
+    if (this.isPlaying) {
+      this.stop();
+      this.pausedAt = newTime;
+      this.play();
+    } else {
+      this.pausedAt = newTime;
+      this.updateProgress();
+    }
   }
 
   seekTo(time) {
-    this.audioElement.currentTime = time;
-    this.updateProgress();
+    if (!this.audioBuffer) return;
+
+    this.pausedAt = time;
+
+    if (this.isPlaying) {
+      this.stop();
+      this.play();
+    } else {
+      this.updateProgress();
+    }
   }
 
   play() {
-    this.audioElement.play();
+    if (!this.audioBuffer) return;
+
+    this.initAudioContext();
+
+    if (this.audioContext.state === 'suspended') {
+      this.audioContext.resume();
+    }
+
+    if (this.sourceNode) {
+      this.sourceNode.disconnect();
+    }
+
+    this.sourceNode = this.audioContext.createBufferSource();
+    this.sourceNode.buffer = this.audioBuffer;
+    this.sourceNode.connect(this.audioContext.destination);
+
+    const offset = this.pausedAt;
+    this.sourceNode.start(0, offset);
+    this.startedAt = this.audioContext.currentTime - offset;
+    this.pausedAt = 0;
     this.isPlaying = true;
+    this.isFinished = false;
+
+    this.sourceNode.onended = () => {
+      if (this.audioContext.currentTime - this.startedAt >= this.audioBuffer.duration) {
+        this.isFinished = true;
+        this.isPlaying = false;
+        this.updatePlayPauseButton();
+        this.updateProgress();
+      }
+    };
+
     this.updatePlayPauseButton();
     this.startProgressUpdate();
   }
 
   pause() {
-    this.audioElement.pause();
-    this.isPlaying = false;
+    if (!this.isPlaying) return;
+
+    const elapsed = this.audioContext.currentTime - this.startedAt;
+    this.stop();
+    this.pausedAt = elapsed;
+
     this.updatePlayPauseButton();
   }
 
   stop() {
-    this.audioElement.pause();
-    this.audioElement.currentTime = 0;
+    if (this.sourceNode) {
+      this.sourceNode.disconnect();
+      this.sourceNode = null;
+    }
     this.isPlaying = false;
   }
 
   seek(e) {
+    if (!this.audioBuffer) return;
+
     const rect = this.progressBar.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const percentage = x / rect.width;
-    const seekTime = percentage * this.audioElement.duration;
-    this.audioElement.currentTime = seekTime;
-    this.updateProgress();
+    const seekTime = percentage * this.audioBuffer.duration;
+
+    this.pausedAt = seekTime;
+
+    if (this.isPlaying) {
+      this.stop();
+      this.play();
+    } else {
+      this.updateProgress();
+    }
   }
 
   startDragging(e) {
@@ -210,25 +278,29 @@ export default class AudioPlayer {
   }
 
   updateProgress() {
-    const elapsed = this.audioElement.currentTime;
-    const duration = this.audioElement.duration;
-    
+    if (!this.audioBuffer) return;
+
+    let elapsed = this.isPlaying
+      ? this.audioContext.currentTime - this.startedAt
+      : this.pausedAt;
+
     if (this.lyricsManager) {
       this.lyricsManager.sync(elapsed);
     }
     
-    const percentage = (elapsed / duration) * 100;
+    if (elapsed >= this.audioBuffer.duration) {
+      elapsed = this.audioBuffer.duration;
+      if (this.isPlaying) {
+        this.isFinished = true;
+        this.isPlaying = false;
+        this.updatePlayPauseButton();
+      }
+    }
+
+    const percentage = (elapsed / this.audioBuffer.duration) * 100;
+
     this.progressBar.style.setProperty('--percentage', percentage);
     this.currentTimeSpan.textContent = this.formatTime(elapsed);
-
-    if (elapsed >= duration) {
-      this.isPlaying = false;
-      this.updatePlayPauseButton();
-    }
-  }
-
-  updateDuration() {
-    this.allTimeSpan.textContent = this.formatTime(this.audioElement.duration);
   }
 
   setLyricsManager(lyricsManager) {
@@ -266,6 +338,11 @@ export default class AudioPlayer {
     requestAnimationFrame(update);
   }
 
+  updateDuration() {
+    if (!this.audioBuffer) return;
+    this.allTimeSpan.textContent = this.formatTime(this.audioBuffer.duration);
+  }
+
   formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = Math.floor(seconds % 60);
@@ -275,6 +352,7 @@ export default class AudioPlayer {
   // set up mediaSession API
   setupMediaSession() {
     if ('mediaSession' in navigator) {
+      console.log('Initializing MediaSession API');
       navigator.mediaSession.metadata = new MediaMetadata({
         title: this.audioMetaData.title,
         artist: this.audioMetaData.artist,
@@ -288,6 +366,8 @@ export default class AudioPlayer {
       navigator.mediaSession.setActionHandler('seekforward', () => this.seekRelative(10));
       navigator.mediaSession.setActionHandler('previoustrack', () => this.seekRelative(-10));
       navigator.mediaSession.setActionHandler('nexttrack', () => this.seekRelative(10));
+    } else  {
+      console.warn('MediaSession API not available');
     }
-  }
+  } 
 }
