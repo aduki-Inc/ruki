@@ -188,16 +188,10 @@ export default class AudioPlayer {
       let x = moveEvent.clientX - rect.left;
       x = Math.max(0, Math.min(x, rect.width)); // Constrain x within the progress bar
       const percentage = x / rect.width;
-      const seekTime = percentage * this.audioBuffer.duration;
+      const seekTime = percentage * this.audioElement.duration;
+      this.audioElement.currentTime = seekTime;
   
-      this.pausedAt = seekTime;
-  
-      if (this.isPlaying) {
-        this.stop();
-        this.play();
-      } else {
-        this.updateProgress();
-      }
+      this.updateProgress();
     };
   
     const handleMouseUp = () => {

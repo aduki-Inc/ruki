@@ -23,7 +23,7 @@
             <span class="fade last"></span>
           </div>
           <div class="info">
-            <h4 class="song-title">Bohemian Rhapsody</h4>
+            <h4 class="song-title">Bohemian Rhapsody (Remastered 2011)</h4>
             <span class="artist">Queen</span>
           </div>
         </div>
@@ -127,9 +127,9 @@
     import AudioPlayer from './js/audio.js';
 
     const audioMetaData = {
-      title: 'Bohemian Rhapsody',
+      title: 'Bohemian Rhapsody(Remastered 2011)',
       artist: 'Queen',
-      album: 'A Night at the Opera',
+      album: 'Bohemian Rhapsody(The Original Soundtrack)',
       lyrics: './music/bhr.lrc',
       audio: './music/bhr.mp3',
       artwork: [
@@ -179,6 +179,42 @@
 
     // Connect the LyricsManager to the AudioPlayer
     audioPlayer.setLyricsManager(lyricsManager);
+
+    // Animate title
+    function setupScrollingText() {
+    const songTitles = document.querySelectorAll('.song-title');
+    
+    songTitles.forEach(title => {
+      // Create a temporary element to measure the text width
+      const tempSpan = document.createElement('span');
+      tempSpan.style.visibility = 'hidden';
+      tempSpan.style.position = 'absolute';
+      tempSpan.style.whiteSpace = 'nowrap';
+      tempSpan.innerHTML = title.innerHTML;
+      document.body.appendChild(tempSpan);
+      
+      const textWidth = tempSpan.offsetWidth;
+      document.body.removeChild(tempSpan);
+
+      if (textWidth > title.offsetWidth) {
+        const text = title.textContent;
+        title.innerHTML = `<div class="scrolling-text-container"><span class="scrolling-text">${text}</span></div>`;
+        
+        const container = title.querySelector('.scrolling-text-container');
+        const scrollingText = title.querySelector('.scrolling-text');
+        
+        // Adjust animation duration based on text length
+        const duration = Math.max(20, textWidth / 50); // Minimum 20s, or longer for very long text
+        scrollingText.style.animationDuration = `${duration}s`;
+      }
+    });
+  }
+
+  // Call the function when the page loads
+  window.addEventListener('load', setupScrollingText);
+
+  // Call this function when the song changes
+  // For example: songChangeEvent.addEventListener('change', setupScrollingText);
   </script>
 </body>
 </html>

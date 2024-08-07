@@ -197,6 +197,7 @@ ul li {
 
 section.status.top > .current-song {
   /* border: 1px solid #ffffff; */
+  width: 80%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -205,6 +206,8 @@ section.status.top > .current-song {
 }
 
 section.status.top>.current-song .info {
+  /* border: 1px solid #ffffff; */
+  width: calc(100% - 40px);
   display: flex;
   flex-flow: column;
   align-items: start;
@@ -212,11 +215,43 @@ section.status.top>.current-song .info {
 }
 
 section.status.top>.current-song .info>h4.song-title {
+  /* border: 1px solid #ffffff; */
   margin: 0;
-  font-family: 'Plus Jakarta Sans';
+  width: 100%;
+  max-width: 100%;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  padding: 0;
   font-weight: 500;
   font-size: 0.95rem;
   color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  position: relative;
+}
+
+.scrolling-text-container {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.scrolling-text {
+  display: inline-block;
+  padding: 0 50px 0 0;
+  animation: scroll-text 15s linear infinite;
+}
+
+@keyframes scroll-text {
+  0%, 10% {
+    transform: translateX(0);
+  }
+  45%, 55% {
+    transform: translateX(calc(-100% + 100% - 70px));
+  }
+  90%, 100% {
+    transform: translateX(0);
+  }
 }
 
 section.status.top>.current-song .info>span.artist {
@@ -231,6 +266,7 @@ section.status.top>.current-song .info>span.artist {
 section.status.top>.current-song>.cover {
   width: 40px;
   height: 40px;
+  min-width: 40px;
   display: flex;
   flex-flow: column;
   align-items: center;
@@ -609,7 +645,7 @@ section.controller > .arrows > .arrow .play-next span.text {
   min-height: 18px;
   border-radius: 50px;
   position: absolute;
-  left: calc(var(--percentage) * 1% - 8px);
+  left: calc(var(--percentage) * 1% - 4px);
 }
 
 .control-bar > .bottom > .progress-bar > .point span.dot {
@@ -621,7 +657,7 @@ section.controller > .arrows > .arrow .play-next span.text {
 }
 
 .play-pause.loading svg {
-  animation: spin 1s linear infinite;
+  animation: spin 100ms linear infinite;
 }
 
 @keyframes spin {
